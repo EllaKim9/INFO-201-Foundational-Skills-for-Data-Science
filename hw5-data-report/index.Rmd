@@ -1,0 +1,49 @@
+---
+title: "Shootings"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+source("analysis.R")
+```
+
+## Summary
+
+In `r year`, there were `r n_shootings` total mass shootings, altogether being `r total_death` lives lost. `r city_most_impacted` was the most impacted[^1] city nationwide. The state(s) with the least number of incidents was(were) `r state_least`. The date(s) with the most number of separate cases was(were) `r date_most`. This data was sourced from [a website]("http://www.shootingtracker.com/") with data for mass shootings that follow the FBI definition.
+
+[^1]: Impact is defined as the sum of killed and injured counts for the variable mentioned.
+
+### Figure 1: Impact by Month
+
+```{r table, echo=FALSE}
+library(knitr)
+kable(figure_1)
+```
+
+In figure 1 above, the table shows the number of deaths, injuries, and impact (see footnote\(^1\)) by state. The figure is sorted by impact from largest to smallest. Here, it is observed that California was impacted the most and with both Massachusetts and Utah as the states who were the least impacted. California, along with Florida and Illinois are all approximately double the impact varsus the next most impated: Pennsylvania. However, when comparing the numbers killed and injured (that make up the impacted value, footnote\(^1\)), California and Florida had twice the count of casualties than Illinois. 
+
+## Thousand Oaks Shooting
+
+One of the incidents in `r year` that drew great attention was on `r thous_date` at a bar in `r thous_city`, `r thous_state`. Not only were there `r thous_n_killed` killed and `r thous_n_injured` injured, but it was [noted]("https://www.washingtonpost.com/nation/2018/11/27/investigators-still-seeking-motive-thousand-oaks-shooting/") that several of the people (consisting of many university students on a college night) who died/survived this night had previously survived the deadlist mass shooting in modern American history in 2017. Peviously known as [one of the nation'ss afest cities]("https://www.cnn.com/2018/11/09/us/california-thousand-oaks-shooting-how-it-unfolded/index.html"), the community was hit with another destructive event when they were forced to evacuate their homes the next morning due to a spreading wildfire. Whether the fire and it forcing the FBI and other investigators to evacuate the scene had a signficant impact or not, the motive of the shooter is still unknown. Although this tragedy is not noted for the most death counts of 2018, it is relatively unique in its connection and sequence to other damaging events that the Thousand Oaks residents had to experience within a short period of time.
+
+### Figure 2: US map and Shootings
+ 
+This interactive map provides the location by address of each incident, and popups provide the city the address is located in (easier geographical identification for reader rather than address), as well as the number of deaths and injuries at that incident. The size of each incident's circle represents the impact's (footnote\(^1\)) magnitude, thereby comparing the size of each incident to others geographically.
+ 
+```{r figure_2, echo=FALSE}
+figure_2
+```
+ 
+**Note** A reminder that each one of these circles represents a single incident, that although `r city_most_impacted` is the city most impacted, it does not mean that the circle will be the largest there since location is by address/incident. Here, we see that a great number of the incidents are on the eastern half of the United States. Larger circles also tend to be in regions/states known to have higher populations. 
+
+### Figure 3: Month vs Killed/Injured Ratio
+
+#### Question: How does the killed/injured ratio change by the month?
+
+Though the two variables intuitively seem independent of each other, this figure analyses the potential relationship between the month and the killed/injured ratio (derived from the total count of each within every month).
+
+```{r figure_3, echo=FALSE}
+figure_3
+```
+
+A ratio bar graph was chosen in order to visualize whether more people were killed than injured or vice versa. This way, trends of the killed ratio forming a pattern or injured ratio (both divided from the total count and in contrasting colors) are more obvious to the reader. As seen in the plot, however, there is no clear pattern besides the fact that the data seems approximately symmetrical across the vertical half-point of the twelve months. The highest kill ratios are in Feburary (02) and November (11). However, the lack of relationship of this ratio to major holidays, seasons/climate, and other secondary variables do not seem apparent. This leads to the possible conclusion that there is no relationship between month and killed/injured ratios.

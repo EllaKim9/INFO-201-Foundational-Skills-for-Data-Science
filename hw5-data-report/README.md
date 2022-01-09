@@ -1,0 +1,2 @@
+# a5-data-report
+This assignment demonstrates my ability to leverage `R Markdown` to build a [report](https://info-201a-sp20.github.io/da5-data-report-EllaKim9/) based on crowd-sourced mass shootings in the U.S. in 2018.  
