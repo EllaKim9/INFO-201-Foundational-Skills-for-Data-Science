@@ -1,0 +1,73 @@
+---
+title: "A Look at the U.S. University System"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("scripts/earnings.R")
+source("scripts/type.R")
+source("scripts/summary_info.R")
+source("scripts/create-aggregate-data.R")
+source("scripts/map.R")
+```
+
+## Introduction
+
+We are pulling our data from College ScoreCard which is a Federal dataset. All of the data was secured by them and through College ScoreCard requesting data from the schools themselves. These datasets were newly released in 2019 by DeVos to allow students to get an accurate picture of college. The insights that we hope to gain from this dataset will help students understand if college is the right path for them, and how to persue college if they so choose. Currently is the U.S. Student Debt is over 1 trillon dollars culmatively and is a massive burdern. We hope to get useful insights from this dataset as we explore it.
+
+## The Data Set at a Glance
+```{r summary_info, echo=FALSE}
+info <- summary_info(data_df, majors_df)
+```
+
+In the data set, a total of `r info$total_schools` schools were included in the study. From this data set, we learn that the average cost to attend a school in the United States is around `r info$avg_cost` annually. This number includes tuition, books, and any other fees. We are also able to see the most and least expensive schools in the U.S.: most expensive being `r info$most_expensive$name`, which costs `r info$most_expensive$cost` and least expensive being `r info$least_expensive$name`, which costs `r info$least_expensive$cost`. Because `r info$avg_cost` is still a lot of money, most college students take out loans in order to pay. After graduation, the average college student ends up with a debt of around `r info$avg_debt`. With the correct major, people can quickly pay off their debts while retaining a good amount of money for themselves. However, most don't think about paying off their future debts when they're picking a major. Through this data set, we see that although some majors pay well, their debts are too much to bear, specifically, the study of `r info$min_rev$major` The people who studied this had a revenue of `r info$min_rev$min`. Although this field seems like a good career path, this data set tells us that we might have to think again before deciding. In contrast, a good career path would be `r info$max_rev$major` The people who studied this field had a revenue of `r info$max_rev$max`. This data set contains several interesting information about colleges in the U.S. that I think are vital to our study.
+
+## Is Potential Earnings of Prestige Colleges Worth the Cost?
+
+Many high school students are pushed by their aspirations and parents to go to the prestige college like UC Berkley, Harvard, or another college of the similar caliber. These types of colleges boast tuition costs up to $60,000 dollars per year. To explore if these prestige univerisities pay off, we can compare the yearly cost (tuition + books), years to get the degree, mean yearly earnings of the student six, eight, and ten years after enrollement, and admission rate. Important to note, the data on earnings comes from students who have filed for federal finiancial aid. This data comes from College Scorecard which is ran by the U.S. Department of Education, so all of this data federal.
+
+Note: Per College Scorecard, Earnings are defined as the sum of wages and deferred compensation from all non-duplicate W-2 forms received for each individual (from both full- and part-time employment), plus positive self-employment earnings from Schedule SE.
+ 
+ 
+```{r g_earnings, echo=FALSE}
+g_earnings
+```
+
+
+## Debt Across the States
+
+A question we want to answer is, Do certain states correlate with higher student debt? We can take a look at these correlations and think about what relates debt and the state. e.g poverty, institution cost, public / private colleges
+
+
+```{r g_us, echo=FALSE}
+g_us
+```
+
+From this map, we can see that there is a large grouping of student debt in the southeastern states. Other notables states are South Dakota and Vermont. The large grouping of southeastern states can most likely be due to high college tuition costs, and a higher poverty level. Most colleges around the U.S. hold the same tuition, but the amount of money the students in a state have changes drastically. Other reasoning could be that more students are persuing higher education, which has a much higher cost than community colleges and trade schools. This could explain why states like New Mexico have lower student debt. 
+
+## Does Income level and Institution Type Affect the Ability to Pay Off Debt?
+
+The cost of tuition and fees can vary from college to college. When dividing into types of schools/institutions, it is common to separate public from "private" and further branch "private" into "for-profit." Depending on many factors (i.e. in-state vs. out-of-state tuition, access to financial aid, etc.), costs at "private" schools are well-known for being higher than "public" schools. Both provide financial aid, but "private" colleges are better known to have scholarships from donors and not from local or state governmental sources. Whether that is a deciding factor or not, they are more likely to offer higher grants/need-based cuts than "public" schools. With these in mind, we can compare the amount of debt for the type of institution ("public," "private," and "private for-profit") and the annual employment earning of a post ten-year graduate across different levels of income (defined in chart description from FAFSA applications: low = $0-$30,000, medium = $30,001-$75,000, high = $75,001+). This chart will analyze whether the average amount of debt is affected by the type of institution and whether family/independent income affects the ability to pay off the debt with the common 10-year plan of interest and payback.
+
+**Note:** Not all institutions nationally are represented either because the source did not give a value for debt or the data was suppressed for privacy. The income level is determined by those students who filled out FAFSA and may not represent the whole population at each institution identified in the average debt. Loan debt in this variable is calculated by the median cumulative debt each student has borrowed during their time enrolled in the specific institution. The accumulation is calculated from the students who graduated from the institute in the 2018-2019 year. 
+
+**Legend:** max and avg represent the highest loan debt from the type of institution and the average loan debt from the type of institution. Low, medium, and high represent the levels of income in the description below the chart title.
+
+```{r g_income_type, echo=FALSE}
+g_income_type
+```
+
+Taking an initial scan of the chart, the average amount of debt depends on the type of instiution, where "public" colleges have the minimum debt of approx(~). $16,000, and "private" colleges have the max of ~$24,000. There is a pattern of the income level (low, medium, and high) resulting in the lowest to highest (respectively) average earnings 10 years post-graduation for all types of institutions. All the income level earnings for "private for-profit" colleges are the minimum values when comparing the corresponding levels across all the types of schools, versus "private" institutions and all their earnings being the maximum for each level. 
+
+Average debt accumilated at graduation is significantly less than the earnings for all income levels, especially for students graduating from "public" and "private" schools. "Private for-profit" schools, however, have greater intervals between income level earnings, with the difference between low-level and high-level income earnings being ~$15,000. The difference between low-income earnings and the average debt for "private for-profit" is only ~$13,000, whereas "private" and "public" institutions have a difference of ~$23,000 and ~$24,000 respectively. On the other hand, the average debt is around half or less than half of "private" and "public" institutions' low-level income earnings, a significant gap. With "public" and "private" institutions' low-level income earnings still surpassing their own max cumulative loan debt, private for-profit's max is only surpassed by the high-level income earnings. 
+
+From these insights, we can infer that income level does affect a student's earnings post-graduation. Although "private" colleges have the largest average debt, all income level earnings (when used effectively) are high enough to pay off the debts faster/easier than "private for-profit" colleges. Some could argue that with the most expensive colleges in the US for an academic year [surpassing $75,000]( https://www.statista.com/statistics/244041/most-expensive-colleges-in-the-us/) for some "private" schools, the cumulative average debts seem relatively low. That is why max load debt is included in this chart to show that the variation between all the debts are wide, and can possibly explain the existance of students who have high loan debt in such colleges. Contextual variables such as financial aid can also tentatively conclude the significantly lower averages in comparison to such high max values for debt. Households with a large enough income would not qualify for financial aid nor need to take loans and low-level income households that quality for financial grants (as mentioned in the first paragraph of this section) would also direly need loans. 
+
+## Aggregate Table 
+```{r aggregate_data, echo=FALSE}
+kable(salary_range_data, col.names = c("Salary Quartile", "Average Tuition Cost", "Average Admission Rate", "Average Graduation Debt"))
+```
+
+The table shows how average tuition cost, average admission rate, and average graduation debt are related to different ranges of faculty salaries. These are included because they describe different aspects of colleges that relate to qualty of education. 
+Schools that have average faculty salaries in the first quartile (lower 25%), also have the highest average tuition costs. This could indicate that schools that charge more tuition have more employees that are paid less, compared to schools with lower tuition costs. The schools with the lowest admission rate (`r salary_range_data$avg_adm_rate[1]`) also have an average faculty salary in the first quartile. This would mean that more prestigious schools, or schools that are seen as offering a higher quality of education, pay relatively low faculty salaries. These schools with first quartile faculty salaries also have the lowest average debt after graduation. This is interesting as, those schools also had the highest tuition cost. This could indicate that students in these schools are recieving a higher quality of education and are able to manage their debt more effectively. 
